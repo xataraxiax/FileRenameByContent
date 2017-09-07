@@ -2,16 +2,17 @@ import os
 import docx #python-docx needs to be installed via pip (give details?)
 
 """
-All the following needs to be put in a loop which will extract filenames from
-directory, process them, and re-rewite
+Solving people with more than two names still required
+I'm sure we can tidy this up too
 """
 #establish working directory
-files = os.listdir('./testdata/test')
+directory = './testdata/test/'
+files = os.listdir(directory)
 
 for f in files:
     #split filename from extension, save as separate variables
     #needs to take the string from reading in directory
-    file_name, f_ext = os.path.splitext('Sandor Clegane (id1356729)_20611235_assignsubmission_file_Magic and Witchcraft Essay Cherlason.docx')
+    file_name, f_ext = os.path.splitext(f)
 
     #split filename at spaces
     fname = file_name.split()
@@ -29,11 +30,10 @@ for f in files:
         doc = docx.Document(filename)
         fullText = []
         for para in doc.paragraphs:
-            fullText.append(para.text)
-        
+            fullText.append(para.text)        
         return '\n'.join(fullText)
 
-    textComplete = getText('testdata\original\Sandor Clegane (id1356729)_20611235_assignsubmission_file_Magic and Witchcraft Essay Cherlason.docx')
+    textComplete = getText(directory + f)
     textSplit = textComplete.split()
 
     #check for keywords in first 400 words
@@ -54,4 +54,12 @@ for f in files:
     topic = topicCheck(textSplit)
 
     #print last, first, id, topic, extension
-    print fname[1]+',', fname[0], id + ' - ' + topic + f_ext
+    #not sure why it ended up a tuple, but .join sorts it back to string
+    #look into this
+    newname = "".join((fname[1]+', ', fname[0] + ' ', id + ' - ' + topic + f_ext))
+    os.rename(directory + f, directory + newname)
+
+    print type(newname)
+    print newname
+
+    
