@@ -36,15 +36,15 @@ for f in files:
     textComplete = getText(directory + f)
     textSplit = textComplete.split()
 
-    #check for keywords in first 400 words
+    #check for keywords in first 200 words (originally 400, but that was too many)
     #append the first instance of keywords in range to list(topic), or None if none found
     #remove(filter) None types from list
     #if the remaining list contains exactly one element, return that element(topic[0])
     #otherwise return "UNSURE" to prompt manual evaluation of topic
     def topicCheck(textSplit):    
         topic = []
-        topic.append(next(("Spell" for i in xrange(400) if (textSplit[i] == "spell" or textSplit[i] == "invoke")), None))
-        topic.append(next(("Language" for i in xrange(400) if (textSplit[i] == "language")), None))
+        topic.append(next(("Spell" for i in xrange(200) if (textSplit[i] == "curse" or textSplit[i] == "spell" or textSplit[i] == "invoke")), None))
+        topic.append(next(("Language" for i in xrange(200) if (textSplit[i] == "language")), None))
         topic = filter(None, topic)
         if len(topic) == 1:
             return topic[0]
