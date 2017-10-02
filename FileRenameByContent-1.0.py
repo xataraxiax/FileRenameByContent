@@ -6,7 +6,7 @@ Solving people with more than two names still required
 I'm sure we can tidy this up too
 """
 #establish working directory
-directory = './testdata/test/'
+directory = './rename/files_to_rename/'
 files = os.listdir(directory)
 
 for f in files:
